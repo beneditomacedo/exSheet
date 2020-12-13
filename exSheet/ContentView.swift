@@ -4,6 +4,8 @@
 //
 //  Created by Benedito Macedo on 11/12/20.
 //
+// https://www.simpleswiftguide.com/how-to-present-sheet-modally-in-swiftui/
+//
 
 import SwiftUI
 
@@ -11,15 +13,29 @@ struct ContentView: View {
     @State var showingDetail = false
     
     var body: some View {
-        Button(action: {
-            self.showingDetail = true
-        }) {
-            Text("Show detail")
-        }.sheet(isPresented: $showingDetail) {
-            DetailView(showingDetail: self.$showingDetail)
+        VStack {
+            Button(action: {
+                self.showingDetail = true
+            }) {
+                Text("Show Modal")
+            }.sheet(isPresented: $showingDetail) {
+                DetailView(showingDetail: self.$showingDetail)
+            }
+            .padding()
+            .border(Color.blue)
+
+            Button(action: {
+                self.showingDetail = true
+            }) {
+                Text("On Dismiss")
+            }.sheet(isPresented: $showingDetail, onDismiss: {
+                print("Code executed after modal is closed")
+            }) {
+                DetailView(showingDetail: self.$showingDetail)
+            }
+            .padding()
+            .border(Color.blue)
         }
-        .padding()
-        .border(Color.blue)
     }
 }
 
